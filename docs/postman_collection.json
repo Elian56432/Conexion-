@@ -1,0 +1,1056 @@
+{
+  "info": {
+    "name": "API Escuelita - CRUD y pruebas de integridad",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Ejecutar en orden por carpeta. Cada request indica el código HTTP esperado."
+  },
+  "item": [
+    {
+      "name": "1. Departamentos",
+      "item": [
+        {
+          "name": "POST crear (201)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/api/departamentos",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "api",
+                "departamentos"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Sistemas\",\n  \"codigo\": \"SIS\",\n  \"descripcion\": \"Depto de sistemas\",\n  \"presupuesto\": 50000,\n  \"activo\": true\n}"
+            }
+          }
+        },
+        {
+          "name": "POST código duplicado (409)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/api/departamentos",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "api",
+                "departamentos"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Sistemas\",\n  \"codigo\": \"SIS\",\n  \"descripcion\": \"Depto de sistemas\",\n  \"presupuesto\": 50000,\n  \"activo\": true\n}"
+            }
+          }
+        },
+        {
+          "name": "POST sin nombre (400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/api/departamentos",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "api",
+                "departamentos"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"codigo\": \"X1\",\n  \"activo\": true\n}"
+            }
+          }
+        },
+        {
+          "name": "GET todos (200)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/api/departamentos",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "api",
+                "departamentos"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET por id (200)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/api/departamentos/1",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "api",
+                "departamentos",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET inexistente (404)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/api/departamentos/9999",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "api",
+                "departamentos",
+                "9999"
+              ]
+            }
+          }
+        },
+        {
+          "name": "PUT actualizar (200)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/api/departamentos/1",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "api",
+                "departamentos",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Sistemas\",\n  \"codigo\": \"SIS\",\n  \"descripcion\": \"Actualizado\",\n  \"presupuesto\": 60000,\n  \"activo\": true\n}"
+            }
+          }
+        },
+        {
+          "name": "DELETE con hijos (409)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/api/departamentos/1",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "api",
+                "departamentos",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "\"\""
+            },
+            "description": "Ejecutar después de crear un profesor/curso en ese depto"
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Profesores",
+      "item": [
+        {
+          "name": "POST crear (201)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/api/profesores",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "api",
+                "profesores"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Ana\",\n  \"apellido\": \"López\",\n  \"email\": \"ana@escuela.mx\",\n  \"telefono\": \"5551234567\",\n  \"fechaContratacion\": \"2020-08-15\",\n  \"departamento\": {\n    \"id\": 1\n  }\n}"
+            }
+          }
+        },
+        {
+          "name": "POST departamento inexistente (400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/api/profesores",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "api",
+                "profesores"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Luis\",\n  \"apellido\": \"Pérez\",\n  \"email\": \"luis@escuela.mx\",\n  \"departamento\": {\n    \"id\": 9999\n  }\n}"
+            }
+          }
+        },
+        {
+          "name": "POST sin departamento (400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/api/profesores",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "api",
+                "profesores"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Luis\",\n  \"apellido\": \"Pérez\",\n  \"email\": \"luis2@escuela.mx\"\n}"
+            }
+          }
+        },
+        {
+          "name": "POST email inválido (400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/api/profesores",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "api",
+                "profesores"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Luis\",\n  \"apellido\": \"Pérez\",\n  \"email\": \"no-es-email\",\n  \"departamento\": {\n    \"id\": 1\n  }\n}"
+            }
+          }
+        },
+        {
+          "name": "POST email duplicado (409)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/api/profesores",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "api",
+                "profesores"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Ana\",\n  \"apellido\": \"Clon\",\n  \"email\": \"ana@escuela.mx\",\n  \"departamento\": {\n    \"id\": 1\n  }\n}"
+            }
+          }
+        },
+        {
+          "name": "GET todos (200)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/api/profesores",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "api",
+                "profesores"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET por departamento (200)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/api/profesores?departamentoId=1",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "api",
+                "profesores"
+              ]
+            }
+          }
+        },
+        {
+          "name": "PUT actualizar (200)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/api/profesores/1",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "api",
+                "profesores",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Ana María\",\n  \"apellido\": \"López\",\n  \"email\": \"ana@escuela.mx\",\n  \"telefono\": \"5559999999\",\n  \"fechaContratacion\": \"2020-08-15\",\n  \"departamento\": {\n    \"id\": 1\n  }\n}"
+            }
+          }
+        },
+        {
+          "name": "DELETE (204)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/api/profesores/1",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "api",
+                "profesores",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "\"\""
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Cursos",
+      "item": [
+        {
+          "name": "POST crear (201)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/api/cursos",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "api",
+                "cursos"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Bases de Datos\",\n  \"codigoCurso\": \"BD101\",\n  \"temario\": \"SQL, normalización, JPA\",\n  \"creditos\": 8,\n  \"activo\": true,\n  \"departamento\": {\n    \"id\": 1\n  }\n}"
+            }
+          }
+        },
+        {
+          "name": "POST departamento inexistente (400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/api/cursos",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "api",
+                "cursos"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"X\",\n  \"codigoCurso\": \"X1\",\n  \"creditos\": 5,\n  \"departamento\": {\n    \"id\": 9999\n  }\n}"
+            }
+          }
+        },
+        {
+          "name": "POST créditos inválidos (400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/api/cursos",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "api",
+                "cursos"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"X\",\n  \"codigoCurso\": \"X2\",\n  \"creditos\": 0,\n  \"departamento\": {\n    \"id\": 1\n  }\n}"
+            }
+          }
+        },
+        {
+          "name": "GET todos (200)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/api/cursos",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "api",
+                "cursos"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET por id (200)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/api/cursos/1",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "api",
+                "cursos",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "PUT actualizar (200)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/api/cursos/1",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "api",
+                "cursos",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Bases de Datos I\",\n  \"codigoCurso\": \"BD101\",\n  \"temario\": \"Actualizado\",\n  \"creditos\": 9,\n  \"activo\": true,\n  \"departamento\": {\n    \"id\": 1\n  }\n}"
+            }
+          }
+        },
+        {
+          "name": "DELETE con inscripciones (409)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/api/cursos/1",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "api",
+                "cursos",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "\"\""
+            },
+            "description": "Ejecutar después de crear una inscripción en ese curso"
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. Estudiantes",
+      "item": [
+        {
+          "name": "POST crear (201)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/api/estudiantes",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "api",
+                "estudiantes"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Liam\",\n  \"apellido\": \"García\",\n  \"correoElectronico\": \"liam@mail.com\",\n  \"telefono\": \"5550001111\",\n  \"fechaNacimiento\": \"2003-04-20\",\n  \"promedioAcumulado\": 9.1\n}"
+            }
+          }
+        },
+        {
+          "name": "POST correo duplicado (409)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/api/estudiantes",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "api",
+                "estudiantes"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Otro\",\n  \"apellido\": \"Liam\",\n  \"correoElectronico\": \"liam@mail.com\",\n  \"promedioAcumulado\": 8\n}"
+            }
+          }
+        },
+        {
+          "name": "POST promedio fuera de rango (400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/api/estudiantes",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "api",
+                "estudiantes"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Y\",\n  \"apellido\": \"Z\",\n  \"correoElectronico\": \"y@mail.com\",\n  \"promedioAcumulado\": 15\n}"
+            }
+          }
+        },
+        {
+          "name": "POST fecha mal formada (400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/api/estudiantes",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "api",
+                "estudiantes"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Y\",\n  \"apellido\": \"Z\",\n  \"correoElectronico\": \"y2@mail.com\",\n  \"fechaNacimiento\": \"20-04-2003\",\n  \"promedioAcumulado\": 8\n}"
+            }
+          }
+        },
+        {
+          "name": "GET todos (200)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/api/estudiantes",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "api",
+                "estudiantes"
+              ]
+            }
+          }
+        },
+        {
+          "name": "PUT actualizar (200)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/api/estudiantes/1",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "api",
+                "estudiantes",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Liam\",\n  \"apellido\": \"García\",\n  \"correoElectronico\": \"liam@mail.com\",\n  \"telefono\": \"5552223333\",\n  \"fechaNacimiento\": \"2003-04-20\",\n  \"promedioAcumulado\": 9.4\n}"
+            }
+          }
+        },
+        {
+          "name": "DELETE con inscripciones (409)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/api/estudiantes/1",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "api",
+                "estudiantes",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "\"\""
+            },
+            "description": "Ejecutar después de crear una inscripción"
+          }
+        }
+      ]
+    },
+    {
+      "name": "5. Inscripciones",
+      "item": [
+        {
+          "name": "POST crear (201)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/api/inscripciones",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "api",
+                "inscripciones"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fechaInscripcion\": \"2026-08-10\",\n  \"estado\": \"ACTIVO\",\n  \"semestreCursado\": \"2026-2\",\n  \"estudiante\": {\n    \"id\": 1\n  },\n  \"curso\": {\n    \"id\": 1\n  }\n}"
+            }
+          }
+        },
+        {
+          "name": "POST duplicada (409)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/api/inscripciones",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "api",
+                "inscripciones"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fechaInscripcion\": \"2026-08-10\",\n  \"estado\": \"ACTIVO\",\n  \"semestreCursado\": \"2026-2\",\n  \"estudiante\": {\n    \"id\": 1\n  },\n  \"curso\": {\n    \"id\": 1\n  }\n}"
+            }
+          }
+        },
+        {
+          "name": "POST estudiante inexistente (400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/api/inscripciones",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "api",
+                "inscripciones"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fechaInscripcion\": \"2026-08-10\",\n  \"estado\": \"ACTIVO\",\n  \"semestreCursado\": \"2026-2\",\n  \"estudiante\": {\n    \"id\": 9999\n  },\n  \"curso\": {\n    \"id\": 1\n  }\n}"
+            }
+          }
+        },
+        {
+          "name": "POST curso inexistente (400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/api/inscripciones",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "api",
+                "inscripciones"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fechaInscripcion\": \"2026-08-10\",\n  \"estado\": \"ACTIVO\",\n  \"semestreCursado\": \"2026-2\",\n  \"estudiante\": {\n    \"id\": 1\n  },\n  \"curso\": {\n    \"id\": 9999\n  }\n}"
+            }
+          }
+        },
+        {
+          "name": "POST estado inválido (400)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/api/inscripciones",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "api",
+                "inscripciones"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fechaInscripcion\": \"2026-08-10\",\n  \"estado\": \"QUIEN SABE\",\n  \"semestreCursado\": \"2026-2\",\n  \"estudiante\": {\n    \"id\": 1\n  },\n  \"curso\": {\n    \"id\": 1\n  }\n}"
+            }
+          }
+        },
+        {
+          "name": "GET todas (200)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/api/inscripciones",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "api",
+                "inscripciones"
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET por estudiante (200)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/api/inscripciones?estudianteId=1",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "api",
+                "inscripciones"
+              ]
+            }
+          }
+        },
+        {
+          "name": "PUT calificar (200)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/api/inscripciones/1",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "api",
+                "inscripciones",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fechaInscripcion\": \"2026-08-10\",\n  \"estado\": \"APROBADO\",\n  \"calificacionFinal\": 9.5,\n  \"semestreCursado\": \"2026-2\",\n  \"estudiante\": {\n    \"id\": 1\n  },\n  \"curso\": {\n    \"id\": 1\n  }\n}"
+            }
+          }
+        },
+        {
+          "name": "DELETE (204)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/api/inscripciones/1",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "api",
+                "inscripciones",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "\"\""
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base",
+      "value": "http://localhost:8080"
+    }
+  ]
+}

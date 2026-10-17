@@ -1,0 +1,48 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.5.0'
+    id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.projecto1'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Soporte para API REST y controladores web
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    
+    // Validaciones (@NotBlank, @Email, @Valid...)
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    // Soporte para JPA, Hibernate y conexión con bases de datos relacionales
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    
+    // Driver oficial para conectar con PostgreSQL
+    runtimeOnly 'org.postgresql:postgresql'
+
+    // Lombok para simplificar código (getters, setters, constructores)
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    // Pruebas unitarias e integración
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    // BD en memoria solo para pruebas (para que los tests no dependan de PostgreSQL)
+    testRuntimeOnly 'com.h2database:h2'
+    testCompileOnly 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
